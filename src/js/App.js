@@ -144,6 +144,8 @@ new (enyo.kind({
     var address = this.$.searchLocation.getValue();
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
+        this.$.pullout.openPullout("searchpullout");
+        this.$.pullout.setSearchData(results);
         map.setCenter(results[0].geometry.location);
         map.setZoom(15);
         var marker = new google.maps.Marker({
@@ -153,7 +155,7 @@ new (enyo.kind({
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
-    });
+    }.bind(this));
   }
 }))({fit: true, classes: "enyo-unselectable"}).write();
 

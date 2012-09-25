@@ -1,3 +1,20 @@
+/* item */
+.item {
+	color:white;
+	height: 50px;
+	border-top: 1px solid black;
+	padding: 12px 16px;
+	background:#454545;
+}
+.item-selected {
+	background: #226B9A;
+}
+
+.item > * {
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .direction-img {
 	 margin-right: 5px;
 	 top:50px;

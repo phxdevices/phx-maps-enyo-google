@@ -34,6 +34,11 @@ enyo.kind({
 					]},
 					{fit: true, kind: "Scroller", classes: "bookmark-scroller", components: [
 					]}
+				]},
+				{name: "searchpullout", kind: "FittableRows", showing: false, classes: "enyo-fit", components: [
+					{kind: "List", name: "list", fit: true, touch: true, onSetupItem: "setupSearchData", components: [
+				        {kind: "SearchListItem", name:"listItem", content: ""}
+				    ]}
 				]}
 			]}
 		]}
@@ -50,9 +55,44 @@ enyo.kind({
 			this.animateToMin();
 			this.$.info.hide();
 			this.$.bookmark.hide();
+			this.$.searchpullout.hide();
 			t.show();
 			t.resized();
 		}
+	},
+	openPullout: function(inPanelName){
+			var t = this.$[inPanelName];
+			this.animateToMin();
+			this.$.info.hide();
+			this.$.bookmark.hide();
+			this.$.searchpullout.hide();
+			t.show();
+			t.resized();	
+	},
+	setSearchData: function(datavar) {
+	    console.log("New training data: " + datavar.length);
+	    this.results = datavar;
+	    this.$.list.setCount(this.results.length);
+	    //this.$.list.refresh();
+	    this.$.list.reset();
+	},
+	setupSearchData: function(inSender, inEvent) {
+	    var i = inEvent.index;
+	    var item = this.results[i];
+	    console.log("Search data: " + item.formatted_address);
+
+	    this.$.listItem.setItemName(item.formatted_address);
+	    var selected = inSender.isSelected(i);
+	    this.$.listItem.setSelected(selected);
+	    if(selected){
+	      //this.owner.$.middle.setTrainingId(item.id);
+	      	map.setCenter(item.geometry.location);
+        	map.setZoom(15);
+        	var marker = new google.maps.Marker({
+                map: map,
+                position: item.geometry.location
+            });
+	    }
 	},
 	valueChanged: function() {
 		this.inherited(arguments);
