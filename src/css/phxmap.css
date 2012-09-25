@@ -1,0 +1,143 @@
+.direction-img {
+	 margin-right: 5px;
+	 top:50px;
+}
+
+.enyo-googlemap {	
+	overflow: hidden;
+	position: relative;
+}
+
+.app {
+	overflow: hidden;
+}
+
+.toolbar {
+	height: 55px;
+}
+
+.menu {
+	display: block;
+	margin: 0;
+	float: right;
+}
+
+.pullout-menu {
+	display: none;
+}
+
+.search-input {
+	width: 180px;
+}
+
+/* adapt to smaller displays */
+@media (max-width: 480px) {
+	.menu {
+		display: none;
+	}
+
+	.pullout-menu {
+		display: block;
+		margin: 0;
+	}
+
+	.search-input {
+		width: 140px;
+	}
+}
+
+.pullout {
+	position: absolute;
+	top: 55px;
+	left: 100px;
+	bottom: 0;
+	width: 35%;
+	max-width: 35%;
+	background: #D8D8D8;
+}
+
+.pullout-shadow {
+	position: absolute;
+	height: 100%;
+	width: 20px;
+	left: -20px;
+	background: url(../../images/sliding-shadow.png) repeat-y;
+	background-size: 20px 2px;
+}
+
+.pullout-grabbutton {
+	position: absolute;
+	bottom: 10px;
+	left: 12px;
+	border-radius: 10px 0 0 10px;
+}
+
+.pullout-toolbar {
+	padding-top: 4px;
+	text-align: center;
+}
+
+.settings {
+	padding: 10px;
+}
+
+.settings > * {
+	padding: 10px;
+	min-height: 30px;
+	line-height: 30px;
+}
+
+.settings > * > * {
+	display: inline-block;
+}
+
+.labeled-item-icon {
+	vertical-align: bottom;
+	padding-right: 5px;
+}
+
+.label-item-input {
+	float: right;
+}
+
+.bookmark-header {
+	text-align: center;
+	padding: 10px 0;
+}
+
+.bookmark-scroller {
+	background-color: #fff;
+}
+
+.bookmark-item {
+	padding: 10px;
+}	
+
+.bookmark-item-title, .bookmark-item-details {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.bookmark-item-title {
+	margin-top: 10px;
+	font-size: 16px;
+}
+
+.bookmark-item-details {
+	font-size: 14px;
+	color: #606060;
+}
+
+.infobox {
+	position: absolute;
+	padding: 10px;
+	border-radius: 10px;
+	background-color: #4C4C4C;
+	color: #fff;
+	font-size: 18px;
+}
+
+.infobox-details {
+	font-size: 14px;
+}

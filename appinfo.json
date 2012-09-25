@@ -1,0 +1,11 @@
+{
+	"id": "com.phxdevices.phxmap",
+	"version": "0.0.4",
+	"vendor": "phxdevices",
+	"type": "web",
+	"main": "index.html",
+	"title": "Phx Maps",
+	"icon": "icon.png",
+	"uiRevision": 2,
+	"plug-ins": false
+}
