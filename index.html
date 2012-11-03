@@ -19,7 +19,9 @@
     directionsService = new google.maps.DirectionsService();
     trafficLayer = new google.maps.TrafficLayer();
     transitLayer = new google.maps.TransitLayer();
-
+    weatherLayer = new google.maps.weather.WeatherLayer({temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT});
+    cloudLayer = new google.maps.weather.CloudLayer();
+    bikeLayer = new google.maps.BicyclingLayer();
     geocoder = new google.maps.Geocoder();
   </script>
 
