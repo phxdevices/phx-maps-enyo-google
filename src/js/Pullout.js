@@ -43,10 +43,10 @@ enyo.kind({
 			]}
 		]}
 	],
-	max: 100,
-	min: 65.5,
-	value: 100,
-	unit: "%", 
+	max: 320,
+	min: 0,
+	value: 320,
+	unit: "px", 
 	toggle: function(inPanelName) {
 		var t = this.$[inPanelName];
 		if (t.showing && this.isAtMin()) {

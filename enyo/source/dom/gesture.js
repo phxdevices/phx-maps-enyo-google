@@ -1,14 +1,15 @@
 //* @public
 /**
-	Enyo supports a set of cross-platform gesture events that work similarly on
-	all supported platforms. These events are provided so that users can write a
+	Enyo supports a set of normalized events that work similarly across	all
+	supported platforms. These events are provided so that users can write a
 	single set of event handlers for applications that run on both mobile and
 	desktop platforms.  They are needed because desktop and mobile platforms
-	handle basic gestures differently.
+	handle basic input differently.
 
-	For more information on gesture events and their associated properties,	see
-	the documentation on [Gestures](https://github.com/enyojs/enyo/wiki/Gestures)
-	in the Enyo Developer Guide.
+	For more information on normalized input events and their associated
+	properties,	see	the documentation on
+	[User Input](https://github.com/enyojs/enyo/wiki/User-Input) in the Enyo
+	Developer Guide.
 */
 enyo.gesture = {
 	//* @protected
@@ -36,6 +37,12 @@ enyo.gesture = {
 			// multi-button not supported, priority: left, right, middle
 			// (note: IE bitmask is 1=left, 2=right, 4=center);
 			e.which = b & 1 ? 1 : (b & 2 ? 2 : (b & 4 ? 3 : 0));
+		} else if (enyo.platform.webos || window.PalmSystem) {
+			// Temporary fix for owos: it does not currently supply 'which' on move events
+			// and the user agent string doesn't identify itself so we test for PalmSystem
+			if (e.which === 0) {
+				e.which = 1;
+			}
 		}
 		return e;
 	},

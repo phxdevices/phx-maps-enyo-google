@@ -1,4 +1,4 @@
-new (enyo.kind({
+enyo.kind({
   name: "App",
   classes: "app",
   components: [
@@ -157,7 +157,7 @@ new (enyo.kind({
       }
     }.bind(this));
   }
-}))({fit: true, classes: "enyo-unselectable"}).write();
+});
 
 function testing(){
   console.log("testing extern clicked");

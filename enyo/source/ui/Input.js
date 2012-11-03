@@ -28,10 +28,12 @@ enyo.kind({
 		*/
 		type: "",
 		/**
-			When true, prevents input into the control. This maps to the 
+			When true, prevents input into the control. This maps to the
 			_disabled_ DOM attribute.
 		*/
-		disabled: false
+		disabled: false,
+		//* When true, select the contents of the input when it gains focus.
+		selectOnFocus: false
 	},
 	events: {
 		//* Fires when the input is disabled or enabled.
@@ -42,11 +44,8 @@ enyo.kind({
 	//* @protected
 	tag: "input",
 	classes: "enyo-input",
-	attributes: {
-		onfocus: enyo.bubbler,
-		onblur: enyo.bubbler
-	},
 	handlers: {
+		onfocus: "focused",
 		oninput: "input",
 		onclear: "clear",
 		ondragstart: "dragstart"
@@ -65,6 +64,9 @@ enyo.kind({
 	},
 	rendered: function() {
 		this.inherited(arguments);
+
+		enyo.makeBubble(this, "focus", "blur");
+
 		this.disabledChanged();
 		if (this.defaultFocus) {
 			this.focus();
@@ -105,5 +107,21 @@ enyo.kind({
 	// note: we disallow dragging of an input to allow text selection on all platforms
 	dragstart: function() {
 		return true;
+	},
+	focused: function() {
+		if (this.selectOnFocus) {
+			enyo.asyncMethod(this, "selectContents");
+		}
+	},
+	selectContents: function() {
+		var n = this.hasNode();
+
+		if (n && n.setSelectionRange) {
+			n.setSelectionRange(0, n.value.length);
+		} else if (n && n.createTextRange) {
+			var r = n.createTextRange();
+			r.expand("textedit");
+			r.select();
+		}
 	}
 });

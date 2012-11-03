@@ -12,10 +12,17 @@ enyo.kind({
 	Internally, _enyo.WebService_ uses _enyo.Async_ subkinds (namely,
 	<a href="#enyo.Ajax">enyo.Ajax</a> and
 	<a href="#enyo.JsonpRequest">enyo.JsonpRequest</a>) to manage transactions.
-	The Async instance for a request is returned from the _send_ method.
+	The _send_ method returns the Async instance used by the request.
 
-	IMPORTANT: _enyo.Ajax_ publishes all the properties of the
+	_enyo.WebService_ uses _enyo.Ajax_ by default and, like _enyo.Ajax_, it
+	publishes all the properties of the
 	<a href="#enyo.AjaxProperties">enyo.AjaxProperties</a> object.
+	
+	To use `enyo.JsonpRequest` instead of `enyo.Ajax`, set `json` to `true`. 
+
+	For more information, see the documentation on
+	[Consuming Web Services](https://github.com/enyojs/enyo/wiki/Consuming-Web-Services)
+	in the Enyo Developer Guide.	
 */
 enyo.kind({
 	name: "enyo.WebService",
@@ -34,7 +41,12 @@ enyo.kind({
 			When using JSONP, optional character set to use to interpret the
 			return data
 		*/
-		charset: null
+		charset: null,
+		/**
+			If set to a non-zero value, the number of milliseconds to
+			wait after the _send_ call before failing with a "timeout" error
+		*/
+		timeout: 0
 	},
 	events: {
 		/**
@@ -67,7 +79,7 @@ enyo.kind({
 	//* @protected
 	sendJsonp: function(inParams) {
 		var jsonp = new enyo.JsonpRequest();
-		for (var n in {'url':1, 'callbackName':1, 'charset':1}) {
+		for (var n in {'url':1, 'callbackName':1, 'charset':1, 'timeout':1}) {
 			jsonp[n] = this[n];
 		}
 		return this.sendAsync(jsonp, inParams);
@@ -77,6 +89,7 @@ enyo.kind({
 		for (var n in enyo.AjaxProperties) {
 			ajax[n] = this[n];
 		}
+		ajax.timeout = this.timeout;
 		return this.sendAsync(ajax, inParams);
 	},
 	sendAsync: function(inAjax, inParams) {

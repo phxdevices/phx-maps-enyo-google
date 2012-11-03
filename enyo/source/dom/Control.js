@@ -382,6 +382,17 @@ enyo.kind({
 		enyo.dom.applyBodyFit();
 		this.addClass("enyo-fit enyo-clip");
 	},
+	/*
+		If the platform is Android or Android-Chrome, don't include
+		the css rule -webkit-overflow-scrolling: touch, as it is
+		not supported in Android and leads to overflow issues
+		(ENYO-900 and ENYO-901)
+	*/
+	setupOverflowScrolling: function() {
+		if(enyo.platform.android || enyo.platform.androidChrome)
+			return;
+		document.getElementsByTagName("body")[0].className += " webkitOverflowScrolling";
+	},
 	//
 	//
 	//* @public
@@ -423,6 +434,8 @@ enyo.kind({
 		} else if (this.fit) {
 			this.addClass("enyo-fit enyo-clip");
 		}
+		// add css to enable hw-accelerated scrolling on non-Android platforms (ENYO-900, ENYO-901)
+		this.setupOverflowScrolling();
 		// generate our HTML
 		pn.innerHTML = this.generateHtml();
 		// post-rendering tasks
@@ -444,6 +457,8 @@ enyo.kind({
 		if (this.fit) {
 			this.setupBodyFitting();
 		}
+		// add css to enable hw-accelerated scrolling on non-Android platforms (ENYO-900, ENYO-901)
+		this.setupOverflowScrolling();
 		document.write(this.generateHtml());
 		// post-rendering tasks
 		this.rendered();
@@ -579,12 +594,7 @@ enyo.kind({
 		var results = '';
 		for (var i=0, c; (c=this.children[i]); i++) {
 			var h = c.generateHtml();
-			if (c.prepend) {
-				// FIXME: does webkit's fast string-consing work in reverse?
-				results = h + results;
-			} else {
-				results += h; 
-			}
+			results += h; 
 		}
 		return results;
 	},
@@ -629,13 +639,17 @@ enyo.kind({
 		}
 	},
 	getParentNode: function() {
-		return this.parentNode || (this.parent && this.parent.hasNode());
+		return this.parentNode || (this.parent && (this.parent.hasNode() || this.parent.getParentNode()));
 	},
 	addNodeToParent: function() {
 		if (this.node) {
 			var pn = this.getParentNode();
 			if (pn) {
-				this[this.prepend ? "insertNodeInParent" : "appendNodeToParent"](pn);
+				if (this.addBefore !== undefined) {
+					this.insertNodeInParent(pn, this.addBefore && this.addBefore.hasNode());
+				} else {
+					this.appendNodeToParent(pn);
+				}
 			}
 		}
 	},

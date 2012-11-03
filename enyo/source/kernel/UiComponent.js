@@ -11,18 +11,35 @@ enyo.kind({
 	name: "enyo.UiComponent",
 	kind: enyo.Component,
 	published: {
-		//* the UiComponent that physically contains this component in the DOM
+		//* The UiComponent that physically contains this component in the DOM
 		container: null,
-		//* the UiComponent that owns this component for the purpose of event propogation
+		/**
+			The UiComponent that owns this component for purposes of event
+			propagation
+		*/
 		parent: null,
-		//* the UiComponent that will physically contain new items added using createComponent
+		/**
+			The UiComponent that will physically contain new items added by
+			calls to _createComponent_
+		*/
 		controlParentName: "client",
-		//* a kind used to manage the size and placement of child components
+		//* A kind used to manage the size and placement of child components
 		layoutKind: ""
 	},
 	handlers: {
 		onresize: "resizeHandler"
 	},
+	/**
+		When set, provides a control reference used to indicate where a
+		newly-created component should be added in the UiComponent's array of
+		children. This is typically used when dynamically creating children
+		(rather than at design time). If set to null, the new control will be
+		added at the beginning of the array; if set to a specific existing
+		control, the new control will be added before the specified control. If
+		left undefined, the	default behavior is to add the new control at the
+		end of the array.
+	*/
+	addBefore: undefined,
 	//* @protected
 	statics: {
 		_resizeFlags: {showingOnly: true} // don't waterfall these events into hidden controls
@@ -67,24 +84,7 @@ enyo.kind({
 	adjustComponentProps: function(inProps) {
 		// Components we create have us as a container by default.
 		inProps.container = inProps.container || this;
-		/*
-		// the 'property master' is the object responsible for adjusting component props
-		// which may not be the object on which component creation was invoked
-		// the first-order property master is our container (this by default)
-		var propMaster = inProps.container;
-		// if we are the first-order property master, our control parent (if it exists) is the second-order master
-		if (propMaster == this) {
-			propMaster = this.controlParent || propMaster;
-		}
-		// if the property master is not us, delegate to him
-		if (propMaster != this) {
-			propMaster.adjustComponentProps(inProps);
-		}
-		// otherwise, do the usual
-		else {
-		*/
-			this.inherited(arguments);
-		//}
+		this.inherited(arguments);
 	},
 	// containment
 	containerChanged: function(inOldContainer) {
@@ -92,7 +92,7 @@ enyo.kind({
 			inOldContainer.removeControl(this);
 		}
 		if (this.container) {
-			this.container.addControl(this);
+			this.container.addControl(this, this.addBefore);
 		}
 	},
 	// parentage
@@ -171,9 +171,9 @@ enyo.kind({
 	},
 	// children
 	addChild: function(inChild, inBefore) {
-		// if inBefore is undefined, use the old behavior of adding to front
-		// or end of children based in this.prepend property. if it's null,
-		// add to end, otherwise add before the specified control.
+		// if inBefore is undefined, add to the end of the child list.
+		// If it's null, add to front of list, otherwise add before the
+		// specified control.
 		//
 		// allow delegating the child to a different container
 		if (this.controlParent /*&& !inChild.isChrome*/) {
@@ -192,21 +192,12 @@ enyo.kind({
 			// Set the child's parent property to this
 			inChild.setParent(this);
 			// track in children array
-			if (inBefore === undefined) {
-				this.children[this.prepend ? "unshift" : "push"](inChild);
-			} else if (inBefore === null) {
-				// this case is needed to allow adding to end when this.prepend is true
-				this.children.push(inChild);
-			} else {
-				var idx = this.indexOfChild(inBefore);
+			if (inBefore !== undefined) {
+				var idx = (inBefore === null) ? 0 : this.indexOfChild(inBefore);
 				this.children.splice(idx, 0, inChild);
+			} else {
+				this.children.push(inChild);
 			}
-			/*
-			// FIXME: hacky, allows us to reparent a rendered control; we need better API for dynamic reparenting
-			if (inChild.hasNode()) {
-				inChild[this.prepend ? "_prepend" : "_append"]();
-			}
-			*/
 		}
 	},
 	removeChild: function(inChild) {

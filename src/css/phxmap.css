@@ -66,10 +66,10 @@
 .pullout {
 	position: absolute;
 	top: 55px;
-	left: 100px;
+	right: 0px;
 	bottom: 0;
-	width: 35%;
-	max-width: 35%;
+	width: 320px;
+	max-width: 320px;
 	background: #D8D8D8;
 }
 
