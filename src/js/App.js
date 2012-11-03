@@ -28,7 +28,13 @@ enyo.kind({
         ]},
         {id: "map_test", classes:"enyo-googlemap", fit: true, style: ""}
       ]},
-      {kind: "Pullout", classes: "pullout", onShowTransit: "showTransit", onShowTraffic: "showTraffic", onMapTypeSelect: "mapTypeSelect", onBookmarkSelect: "bookmarkSelect", components: [
+      {kind: "Pullout", classes: "pullout", 
+        onShowTransit: "showTransit", 
+        onShowTraffic: "showTraffic", 
+        onShowBicycling: "showBicycling",
+        onShowWeather: "showWeather",
+        onMapTypeSelect: "mapTypeSelect", 
+        onBookmarkSelect: "bookmarkSelect", components: [
         {classes: "pullout-menu", defaultKind: "onyx.IconButton", components: [
           {src: "images/menu-icon-info.png", panel: "info", ontap: "togglePullout"},
           {src: "images/menu-icon-bookmark.png", panel: "bookmark", ontap: "togglePullout"},
@@ -93,6 +99,13 @@ enyo.kind({
   },
   showTransit: function(inSender, inEvent) {
     transitLayer.setMap(inEvent.value ? map : null);
+  },
+  showBicycling: function (inSender, inEvent){
+    bikeLayer.setMap(inEvent.value ? map : null);
+  },
+  showWeather: function(inSender, inEvent){
+    weatherLayer.setMap(inEvent.value ? map : null);
+    cloudLayer.setMap(inEvent.value ? map : null);
   },
   findCurrentLocation: function() {
     this.$.currentLocation.go();

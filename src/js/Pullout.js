@@ -4,6 +4,8 @@ enyo.kind({
 	events: {
 		onShowTraffic: "",
 		onShowTransit: "",
+		onShowBicycling: "",
+		onShowWeather: "",
 		onMapTypeSelect: "",
 		onBookmarkSelect: ""
 	},
@@ -17,7 +19,9 @@ enyo.kind({
 					{kind: "onyx.Groupbox", classes: "settings", components: [
 						{kind: "onyx.GroupboxHeader", content: "Layers"},
 						{kind: "LabeledItem", label: "Show Traffic", icon: "images/icon-traffic.png", defaultKind: "onyx.ToggleButton", onChange: "showTrafficChange"},
-						{kind: "LabeledItem", label: "Show Transit", icon: "images/icon-transit.png", defaultKind: "onyx.ToggleButton", onChange: "showTransitChange"}
+						{kind: "LabeledItem", label: "Show Transit", icon: "images/icon-transit.png", defaultKind: "onyx.ToggleButton", onChange: "showTransitChange"},
+						{kind: "LabeledItem", label: "Show Bicycling", icon: "images/icon-transit.png", defaultKind: "onyx.ToggleButton", onChange: "showBicyclingChange"},
+						{kind: "LabeledItem", label: "Show Weather", icon: "images/icon-transit.png", defaultKind: "onyx.ToggleButton", onChange: "showWeatherChange"}
 					]},
 					{name: "mapType", kind: "Group", classes: "onyx-groupbox settings", highlander: true, onchange: "mapTypeChange", components: [
 						{kind: "onyx.GroupboxHeader", content: "Map Type"},
@@ -105,6 +109,14 @@ enyo.kind({
 	showTrafficChange: function(inSender) {
 		console.log("Traffic Toggle Changed: " + inSender.getValue());
 		this.doShowTraffic({value: inSender.getValue()});
+	},
+	showWeatherChange: function(inSender) {
+		console.log("Weather Toggle Changed: " + inSender.getValue());
+		this.doShowWeather({value: inSender.getValue()});
+	},
+	showBicyclingChange: function(inSender) {
+		console.log("Bicycling Toggle Changed: " + inSender.getValue());
+		this.doShowBicycling({value: inSender.getValue()});
 	},	
 	mapTypeChange: function(inSender, inEvent) {
 		var o = inEvent.originator;
