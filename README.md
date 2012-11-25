@@ -14,7 +14,7 @@ P2:
 - [inprogress] check for connectivity and add loading animation (m0912)
 - [done] traffic overlay (a0912)
 - [inprogress] directions (by foot, car and public transfer if available) (e0912)
-- display all search results if more then one is available or if none is found (e0912)
+- [inprogress] display all search results if more then one is available or if none is found (e0912)
 
 --- after this my holidays will be over. Can't estimate yet when I will reach the other goals alone ---
 
@@ -22,7 +22,7 @@ P3:
 
 - [done] traffic layer (a0912)
 - [done] transit layer (a0912)
-- bicycle layer
+- [done] bicycle layer
 - when more then one search result is found, all results should be marked
 - determining the correct zoom level
 - markers should be removed when a new search is executed
