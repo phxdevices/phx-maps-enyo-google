@@ -11,7 +11,6 @@ enyo.kind({
 	},
 	components: [
 		{name: "shadow", classes: "pullout-shadow"},
-		{kind: "onyx.Grabber", classes: "pullout-grabbutton"},
 		{kind: "FittableRows", classes: "enyo-fit", components: [
 			{name: "client", classes: "pullout-toolbar"},
 			{fit: true, style: "position: relative;", components: [
@@ -20,15 +19,15 @@ enyo.kind({
 						{kind: "onyx.GroupboxHeader", content: "Layers"},
 						{kind: "LabeledItem", label: "Show Traffic", icon: "images/icon-traffic.png", defaultKind: "onyx.ToggleButton", onChange: "showTrafficChange"},
 						{kind: "LabeledItem", label: "Show Transit", icon: "images/icon-transit.png", defaultKind: "onyx.ToggleButton", onChange: "showTransitChange"},
-						{kind: "LabeledItem", label: "Show Bicycling", icon: "images/icon-transit.png", defaultKind: "onyx.ToggleButton", onChange: "showBicyclingChange"},
-						{kind: "LabeledItem", label: "Show Weather", icon: "images/icon-transit.png", defaultKind: "onyx.ToggleButton", onChange: "showWeatherChange"}
+						{kind: "LabeledItem", label: "Show Bicycling", icon: "images/icon-bicycle.png", defaultKind: "onyx.ToggleButton", onChange: "showBicyclingChange"},
+						{kind: "LabeledItem", label: "Show Weather", icon: "images/icon-weather.png", defaultKind: "onyx.ToggleButton", onChange: "showWeatherChange"}
 					]},
 					{name: "mapType", kind: "Group", classes: "onyx-groupbox settings", highlander: true, onchange: "mapTypeChange", components: [
 						{kind: "onyx.GroupboxHeader", content: "Map Type"},
 						{kind: "LabeledItem", label: "Road", mapType: "ROADMAP", icon: "images/map-type-road.png", value: true},
 						{kind: "LabeledItem", label: "Satellite", mapType: "SATELLITE", icon: "images/map-type-satellite.png"},
-						{kind: "LabeledItem", label: "Hybrid", mapType: "HYBRID", icon: "images/map-type-satellite.png"},
-						{kind: "LabeledItem", label: "Terrain", mapType: "TERRAIN", icon: "images/map-type-satellite.png"}
+						{kind: "LabeledItem", label: "Hybrid", mapType: "HYBRID", icon: "images/map-type-hybrid.png"},
+						{kind: "LabeledItem", label: "Terrain", mapType: "TERRAIN", icon: "images/map-type-terrain.png"}
 					]}
 				]},
 				{name: "bookmark", kind: "FittableRows", showing: false, classes: "enyo-fit", components: [
@@ -44,6 +43,9 @@ enyo.kind({
 				        {kind: "SearchListItem", name:"listItem", content: ""}
 				    ]}
 				]}
+			]},
+			{kind: "onyx.Toolbar", classes: "toolbar", components: [
+				{kind: "onyx.Grabber"}
 			]}
 		]}
 	],

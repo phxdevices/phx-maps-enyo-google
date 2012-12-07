@@ -14,7 +14,9 @@ enyo.kind({
 		this.inherited(arguments);
 	},
 	stopTracking: function() {
+		console.log("Trying to stop tracking...");
 		if (this._watchId) {
+			console.log("Did stop tracking.");
 			navigator.geolocation.clearWatch(this._watchId);
 		}
 	},

@@ -118,7 +118,7 @@ enyo.kind({
 
     myLocationMarker.setPosition(currentPos);
     //myLocationMarker.setAnimation(google.maps.Animation.BOUNCE);
-
+    console.log("Found current location!");
     inSender.stopTracking();
   },
   codeDirection: function(inSender, inEvent){
